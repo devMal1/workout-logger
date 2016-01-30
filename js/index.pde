@@ -4,14 +4,14 @@ int WIDTH = 500; //window.innerWidth;
 int MARGIN = 10;
 int ROW_MAX = 8;
 int COL_MAX = 4;
-int CELL_WIDTH = (500 - (MARGIN*2))/COL_MAX;
+int CELL_WIDTH = (WIDTH - (MARGIN*2))/COL_MAX;
 int CELL_HEIGHT = 300/ROW_MAX;
-int TABLE_COORDSX = [];
+/*int TABLE_COORDSX = [];
 int TABLE_COORDSY = [];
     int temp = [];
     int temp2 = [];
-    for (int r = 0; r < ROW_MAX; r ++) {
-        for (int c = 0; c < COL_MAX; c ++) {
+    for (int r = 0; r <= ROW_MAX; r ++) {
+        for (int c = 0; c <= COL_MAX; c ++) {
             temp[c] = MARGIN + c*CELL_WIDTH;
             temp2[c] = 100-20 + r*CELL_HEIGHT;
         }
@@ -19,7 +19,25 @@ int TABLE_COORDSY = [];
         TABLE_COORDSY[r] = temp2;
         println(TABLE_COORDSX[0][0] + " cell coord x");
         println(TABLE_COORDSY[0][0] + " cell coord y");
-    }
+    }*/
+int TABLE_COORDSX = {
+    MARGIN + 0*CELL_WIDTH,
+    MARGIN + 1*CELL_WIDTH,
+    MARGIN + 2*CELL_WIDTH,
+    MARGIN + 3*CELL_WIDTH,
+    MARGIN + 4*CELL_WIDTH
+};
+int TABLE_COORDSY = {
+    100-20 + 0*CELL_HEIGHT,
+    100-20 + 1*CELL_HEIGHT,
+    100-20 + 2*CELL_HEIGHT,
+    100-20 + 3*CELL_HEIGHT,
+    100-20 + 4*CELL_HEIGHT,
+    100-20 + 5*CELL_HEIGHT,
+    100-20 + 6*CELL_HEIGHT,
+    100-20 + 7*CELL_HEIGHT,
+    100-20 + 8*CELL_HEIGHT,
+};
 String HEADERS = {
     "Exercise Name",
     "# of Sets",
@@ -44,8 +62,8 @@ temp = [];
     }
 int numOfRows = 0;
 boolean clickedCell = false;
-int clickedCell_x = -1;
-int clickedCell_y = -1;
+int clickedCell_row = -1;
+int clickedCell_col = -1;
 
 //Setup intial drawingboard conditions
 void setup() {  // this is run once.
@@ -198,9 +216,9 @@ int[] mouseHereCells() {
     mouseHereCoords[1] = -1;
     for (int r = 0; r < numOfRows; r ++) {
         for (int c = 0; c < COL_MAX; c ++) {
-            if (mouseX > TABLE_COORDSX[r][c] && mouseX < TABLE_COORDSX[r][c] + CELL_WIDTH &&
-            mouseY > TABLE_COORDSY[r][c] && mouseY < TABLE_COORDSY[r][c] + CELL_HEIGHT) {
-                println("got it");
+            if (mouseX > TABLE_COORDSX[c] && mouseX < TABLE_COORDSX[c+1] &&
+            mouseY > TABLE_COORDSY[r] && mouseY < TABLE_COORDSY[r+1]) {
+                println(r + " " + c);
                 mouseHereCoords[0] = r;
                 mouseHereCoords[1] = c;
                 return mouseHereCoords;
@@ -216,8 +234,9 @@ void numericValuePopUp() {
     fill(60, 219, 250);
     textSize(HEIGHT/20);
     textAlign(CENTER, CENTER);
-    text(logData[clickedCell_x][clickedCell_y], WIDTH/2, HEIGHT/2);
+    text(logData[clickedCell_row][clickedCell_col-1], WIDTH/2, HEIGHT/2);
     strokeWeight(3);
+    //TODO fix the position of the underline vv
     line(WIDTH - 20, HEIGHT - 15, WIDTH + 20, HEIGHT - 15);
 }
 
@@ -234,10 +253,9 @@ void draw() {  // this is run repeatedly.
 
     drawTable(numOfRows);
 
-    if (clickedCell && clickedCell_x >= 1) {//clicked inside numeric-value cell
-        println("inside if");
+    if (clickedCell && clickedCell_col >= 1) {//clicked inside numeric-value cell
         numericValuePopUp();
-    } else if (clickedCell && clickedCell_x == 0) {//clicked inside string-value cell
+    } else if (clickedCell && clickedCell_col == 0) {//clicked inside string-value cell
 
     } else { clickedCell = false; }
 
@@ -248,27 +266,25 @@ void mouseClicked() {
         numOfRows ++;
         if (numOfRows > ROW_MAX) { numOfRows = ROW_MAX; }
     } else if (sync.onClick()) {//syncs todays logs with DB
+        /*temporary, until add actual sync function*/
         clickedCell = false;
-        clickedCell_x = -1;
-        clickedCell_y = -1;
+        clickedCell_row = -1;
+        clickedCell_col = -1;
     } else if (increaseNum.onClick()) {//increse value of item in table
-        if (clickedCell && clickedCell_x >= 1) {
-            println("should be incresing");
-            logData[clickedCell_x][clickedCell_y] += 1;
+        if (clickedCell && clickedCell_col >= 1) {
+            logData[clickedCell_row][clickedCell_col-1] += 1;
         }
     } else if (decreaseNum.onClick()) {//decrease value of item in table
-        if (clickedCell && clickedCell_x >= 1) {
-            logData[clickedCell_x][clickedCell_y] -= 1;
+        if (clickedCell && clickedCell_col >= 1) {
+            logData[clickedCell_row][clickedCell_col-1] -= 1;
         }
     } else if (savedLogs.onClick()) {//displays logs from DB
 
     } else { //check if clicked on table
         int cell_coords = mouseHereCells();
-        clickedCell_x = cell_coords[0];
-        clickedCell_y = cell_coords[1];
-        if (clickedCell_x == -1) { clickedCell = false; }
+        clickedCell_row = cell_coords[0];
+        clickedCell_col = cell_coords[1];
+        if (clickedCell_row == -1) { clickedCell = false; }
         else { clickedCell = true; }
-        println(clickedCell);
-        println(clickedCell_x);
     }
 }
