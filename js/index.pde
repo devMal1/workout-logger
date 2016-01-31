@@ -266,9 +266,7 @@ void mouseClicked() {
     } else if (sync.onClick()) {//syncs todays logs with DB
         /*temporary, until add actual sync function*/
         /*temporarily used as a reset*/
-        print("middle: " + (clickedCell_row+1)*(clickedCell_col-1));
         logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)] = cellValue;
-        println("  after :" + (clickedCell_row+1)*(clickedCell_col-1));
         clickedCell = false;
         clickedCell_row = -1;
         clickedCell_col = -1;
@@ -291,7 +289,6 @@ void mouseClicked() {
         else {
             clickedCell = true;
             if (clickedCell_col >= 1) { cellValue = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)];
-            println("before :" + (clickedCell_row+1)*(clickedCell_col-1));}
         }
     }
 }
