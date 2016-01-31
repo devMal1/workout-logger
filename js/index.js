@@ -52,18 +52,17 @@ String logNames = [];
     for (int i = 0; i < ROW_MAX; i ++) {
         logNames[i] = "";
     }
-int logData = [];
-temp = [];
+int[] logData = new int[ROW_MAX*(COL_MAX-1)];
     for (int r = 0; r < ROW_MAX; r ++) {
         for (int c = 0; c < COL_MAX-1; c ++) {
-            temp[c] = 0;
+            logData[r*(COL_MAX-1)+c] = 0;
         }
-        logData[r] = temp;
     }
 int numOfRows = 0;
 boolean clickedCell = false;
 int clickedCell_row = -1;
 int clickedCell_col = -1;
+int cellValue = 0;
 
 //Setup intial drawingboard conditions
 void setup() {  // this is run once.
@@ -205,7 +204,7 @@ void drawTable(numOfRows) {
                 text(logNames[r], x_init + x_spacing/2, (y_init + y_spacing/2) + r*y_spacing);
             }
             textSize(HEIGHT/20);
-            text(logData[r][c], (x_init + x_spacing/2) + (c+1)*x_spacing, (y_init + y_spacing/2) + r*y_spacing);
+            text(logData[r*(COL_MAX-1)+c], (x_init + x_spacing/2) + (c+1)*x_spacing, (y_init + y_spacing/2) + r*y_spacing);
         }
     }
 }
@@ -233,7 +232,7 @@ void numericValuePopUp() {
     fill(60, 219, 250);
     textSize(HEIGHT/20);
     textAlign(CENTER, CENTER);
-    text(logData[clickedCell_row][clickedCell_col-1], WIDTH/2, HEIGHT/2);
+    text(cellValue, WIDTH/2, HEIGHT/2);
     strokeWeight(3);
     //TODO fix the position of the underline vv
     line(WIDTH - 20, HEIGHT - 15, WIDTH + 20, HEIGHT - 15);
@@ -256,7 +255,7 @@ void draw() {  // this is run repeatedly.
         numericValuePopUp();
     } else if (clickedCell && clickedCell_col == 0) {//clicked inside string-value cell
 
-    } else { clickedCell = false; }
+    } else { }
 
 }
 
@@ -266,16 +265,21 @@ void mouseClicked() {
         if (numOfRows > ROW_MAX) { numOfRows = ROW_MAX; }
     } else if (sync.onClick()) {//syncs todays logs with DB
         /*temporary, until add actual sync function*/
+        /*temporarily used as a reset*/
+        print("middle: " + (clickedCell_row+1)*(clickedCell_col-1));
+        logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)] = cellValue;
+        println("  after :" + (clickedCell_row+1)*(clickedCell_col-1));
         clickedCell = false;
         clickedCell_row = -1;
         clickedCell_col = -1;
+
     } else if (increaseNum.onClick()) {//increse value of item in table
         if (clickedCell && clickedCell_col >= 1) {
-            logData[clickedCell_row][clickedCell_col-1] += 1;
+            cellValue ++;
         }
     } else if (decreaseNum.onClick()) {//decrease value of item in table
         if (clickedCell && clickedCell_col >= 1) {
-            logData[clickedCell_row][clickedCell_col-1] -= 1;
+            cellValue --;
         }
     } else if (savedLogs.onClick()) {//displays logs from DB
 
@@ -284,6 +288,10 @@ void mouseClicked() {
         clickedCell_row = cell_coords[0];
         clickedCell_col = cell_coords[1];
         if (clickedCell_row == -1) { clickedCell = false; }
-        else { clickedCell = true; }
+        else {
+            clickedCell = true;
+            if (clickedCell_col >= 1) { cellValue = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)];
+            println("before :" + (clickedCell_row+1)*(clickedCell_col-1));}
+        }
     }
 }
