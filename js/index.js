@@ -288,7 +288,7 @@ void mouseClicked() {
         if (clickedCell_row == -1) { clickedCell = false; }
         else {
             clickedCell = true;
-            if (clickedCell_col >= 1) { cellValue = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)];
+            if (clickedCell_col >= 1) { cellValue = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)]; }
         }
     }
 }
