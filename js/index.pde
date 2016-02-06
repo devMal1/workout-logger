@@ -136,6 +136,8 @@ Button sync = new Button(200, 390, 100, 100, "SYNC", "circle");
 Button increaseNum = new Button(WIDTH-MARGIN-50, 440, 50, 25, "+", "rectangle");
 Button decreaseNum = new Button(WIDTH-MARGIN-50, 465, 50, 25, "-", "rectangle");
 Button savedLogs = new Button(25 + 25, MARGIN + 10, 40, 10, "", "arrow");
+Button acceptInput = new Button(MARGIN, 200-MARGIN-25, 50, 25, "Okay", "rectangle");
+Button resetInput = new Button(WIDTH-MARGIN-50, 200-MARGIN-25, 50, 25, "Reset", "rectangle");
 
 void drawLoggerScene() {
     strokeWeight(5);
@@ -221,6 +223,8 @@ void inputValuePopUp(value) {
     textAlign(CENTER, CENTER);
     text(value, WIDTH/2, HEIGHT/2);
     strokeWeight(3);
+    acceptInput.draw();
+    resetInput.draw();
 }
 
 void draw() {  // this is run repeatedly.
@@ -245,43 +249,50 @@ void draw() {  // this is run repeatedly.
 }
 
 void mouseClicked() {
-    if (newExercise.onClick()) {//add a new row
-        numOfRows ++;
-        if (numOfRows > ROW_MAX) { numOfRows = ROW_MAX; }
-    } else if (sync.onClick()) {//syncs todays logs with file on device
-        /*temporary, until add actual sync function*/
-        /*temporarily used as a reset*/
-        if (clickedCell && clickedCell_col >= 1) {
+    if (clickedCell && clickedCell_col >= 1) {//valuePopUp() menu options for numeric [data] input
+        if (acceptInput.onClick()) {//set the corresponding value into the data array
             logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)] = cellValue_data;
-        } else if (clickedCell && clickedCell_col == 0) {
-            if (cellValue_name == "" || cellValue_name == " ") { cellValue_name = logNames[clickedCell_row]; }
-            //TODO truncate string at certain length
-            logNames[clickedCell_row] = cellValue_name;
-        }
-        clickedCell = false;
-        clickedCell_row = -1;
-        clickedCell_col = -1;
-
-    } else if (increaseNum.onClick()) {//increse value of item in table
-        if (clickedCell && clickedCell_col >= 1) {
+            //exit value input interface
+            clickedCell = false;
+            clickedCell_row = -1;
+            clickedCell_col = -1;
+        } else if (resetInput.onClick()) {//resets the input value back to the original/previous value
+            cellValue_data = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)];
+        } else if (increaseNum.onClick()) {//increse value of item in table
             cellValue_data ++;
-        }
-    } else if (decreaseNum.onClick()) {//decrease value of item in table
-        if (clickedCell && clickedCell_col >= 1) {
+        } else if (decreaseNum.onClick()) {//decrease value of item in table
             cellValue_data --;
-        }
-    } else if (savedLogs.onClick()) {//displays logs from file on device
-
-    } else { //check if clicked on table
-        int cell_coords = mouseHereCells();
-        clickedCell_row = cell_coords[0];
-        clickedCell_col = cell_coords[1];
-        if (clickedCell_row == -1) { clickedCell = false; }
-        else {
-            clickedCell = true;
-            if (clickedCell_col >= 1) { cellValue_data = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)]; }
-            else if (clickedCell_col == 0) { cellValue_name = ""; } //can set to: logNames[clickedCell_row]; }
-            else { }
+        } else {}
+    } else if (clickedCell && clickedCell_col == 0) {//valuePopUp() menu optinos for String [name] input
+        if (acceptInput.onClick()) {//set the corresponding string into the name array
+            if (cellValue_name == "" || cellValue_name == " ") { cellValue_name = logNames[clickedCell_row]; }
+            logNames[clickedCell_row] = cellValue_name; //TODO truncate string at certain length
+            //exit value input interface
+            clickedCell = false;
+            clickedCell_row = -1;
+            clickedCell_col = -1;
+        } else if (resetInput.onClick()) {//resets the input value back to the original/previous values
+            cellValue_name = ""; //could set to: logNames[clickedCell_row];
+        } else {}
+    } else {//regular menu options
+        if (newExercise.onClick()) {//add a new row
+            numOfRows ++;
+            if (numOfRows > ROW_MAX) { numOfRows = ROW_MAX; }
+        } else if (sync.onClick()) {//syncs todays logs with file on device
+            //TODO needs to start writing to the file
+        } else if (savedLogs.onClick()) {//displays logs from file on device
+            //TODO needs to recover older stored logs from file on device
+        } else { //check if clicked on table
+            int cell_coords = mouseHereCells();
+            clickedCell_row = cell_coords[0];
+            clickedCell_col = cell_coords[1];
+            if (clickedCell_row == -1) { clickedCell = false; }
+            else {
+                clickedCell = true;
+                if (clickedCell_col >= 1) { cellValue_data = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)]; }
+                else if (clickedCell_col == 0) { cellValue_name = ""; } //could set to: logNames[clickedCell_row];
+                else { }
+            }
         }
     }
 }
