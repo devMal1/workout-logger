@@ -50,7 +50,7 @@ String TODAYS_DATE = month() + "." + day() + "." + year();
 //Global variables
 String logNames = [];
     for (int i = 0; i < ROW_MAX; i ++) {
-        logNames[i] = "";
+        logNames[i] = "Exercise Name";
     }
 int[] logData = new int[ROW_MAX*(COL_MAX-1)];
     for (int r = 0; r < ROW_MAX; r ++) {
@@ -62,7 +62,8 @@ int numOfRows = 0;
 boolean clickedCell = false;
 int clickedCell_row = -1;
 int clickedCell_col = -1;
-int cellValue = 0;
+int cellValue_data = 0;
+String cellValue_name = "";
 
 //Setup intial drawingboard conditions
 void setup() {  // this is run once.
@@ -226,16 +227,14 @@ int[] mouseHereCells() {
     return mouseHereCoords;
 }
 
-void numericValuePopUp() {
+void inputValuePopUp(value) {
     fill(0,0,0);
     rect(0, 150, WIDTH, 200);
     fill(60, 219, 250);
     textSize(HEIGHT/20);
     textAlign(CENTER, CENTER);
-    text(cellValue, WIDTH/2, HEIGHT/2);
+    text(value, WIDTH/2, HEIGHT/2);
     strokeWeight(3);
-    //TODO fix the position of the underline vv
-    line(WIDTH - 20, HEIGHT - 15, WIDTH + 20, HEIGHT - 15);
 }
 
 void draw() {  // this is run repeatedly.
@@ -252,9 +251,9 @@ void draw() {  // this is run repeatedly.
     drawTable(numOfRows);
 
     if (clickedCell && clickedCell_col >= 1) {//clicked inside numeric-value cell
-        numericValuePopUp();
+        inputValuePopUp(cellValue_data);
     } else if (clickedCell && clickedCell_col == 0) {//clicked inside string-value cell
-
+        inputValuePopUp(cellValue_name);
     } else { }
 
 }
@@ -263,23 +262,29 @@ void mouseClicked() {
     if (newExercise.onClick()) {//add a new row
         numOfRows ++;
         if (numOfRows > ROW_MAX) { numOfRows = ROW_MAX; }
-    } else if (sync.onClick()) {//syncs todays logs with DB
+    } else if (sync.onClick()) {//syncs todays logs with file on device
         /*temporary, until add actual sync function*/
         /*temporarily used as a reset*/
-        logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)] = cellValue;
+        if (clickedCell && clickedCell_col >= 1) {
+            logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)] = cellValue_data;
+        } else if (clickedCell && clickedCell_col == 0) {
+            if (cellValue_name == "" || cellValue_name == " ") { cellValue_name = logNames[clickedCell_row]; }
+            //TODO truncate string at certain length
+            logNames[clickedCell_row] = cellValue_name;
+        }
         clickedCell = false;
         clickedCell_row = -1;
         clickedCell_col = -1;
 
     } else if (increaseNum.onClick()) {//increse value of item in table
         if (clickedCell && clickedCell_col >= 1) {
-            cellValue ++;
+            cellValue_data ++;
         }
     } else if (decreaseNum.onClick()) {//decrease value of item in table
         if (clickedCell && clickedCell_col >= 1) {
-            cellValue --;
+            cellValue_data --;
         }
-    } else if (savedLogs.onClick()) {//displays logs from DB
+    } else if (savedLogs.onClick()) {//displays logs from file on device
 
     } else { //check if clicked on table
         int cell_coords = mouseHereCells();
@@ -288,7 +293,16 @@ void mouseClicked() {
         if (clickedCell_row == -1) { clickedCell = false; }
         else {
             clickedCell = true;
-            if (clickedCell_col >= 1) { cellValue = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)]; }
+            if (clickedCell_col >= 1) { cellValue_data = logData[clickedCell_row*(COL_MAX-1) + (clickedCell_col-1)]; }
+            else if (clickedCell_col == 0) { cellValue_name = ""; } //can set to: logNames[clickedCell_row]; }
+            else { }
         }
+    }
+}
+
+void keyTyped() {
+    if (clickedCell && clickedCell_col == 0) {
+        //TODO the delete and backspace buttons just add a space for some reason... ??
+        keyCode == DELETE || keyCode == BACKSPACE ? cellValue_name = "" : cellValue_name += key.toString();
     }
 }
