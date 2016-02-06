@@ -6,20 +6,6 @@ int ROW_MAX = 8;
 int COL_MAX = 4;
 int CELL_WIDTH = (WIDTH - (MARGIN*2))/COL_MAX;
 int CELL_HEIGHT = 300/ROW_MAX;
-/*int TABLE_COORDSX = [];
-int TABLE_COORDSY = [];
-    int temp = [];
-    int temp2 = [];
-    for (int r = 0; r <= ROW_MAX; r ++) {
-        for (int c = 0; c <= COL_MAX; c ++) {
-            temp[c] = MARGIN + c*CELL_WIDTH;
-            temp2[c] = 100-20 + r*CELL_HEIGHT;
-        }
-        TABLE_COORDSX[r] = temp;
-        TABLE_COORDSY[r] = temp2;
-        println(TABLE_COORDSX[0][0] + " cell coord x");
-        println(TABLE_COORDSY[0][0] + " cell coord y");
-    }*/
 int TABLE_COORDSX = {
     MARGIN + 0*CELL_WIDTH,
     MARGIN + 1*CELL_WIDTH,
