@@ -1,0 +1,22 @@
+<div>
+    <table>
+        <thead>
+            <tr>
+                <td>Exercise Name</td>
+                <td># of Sets</td>
+                <td># of Reps</td>
+                <td>Weight</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="#log of workoutLogs" *ngIf="workoutLogs">
+                <td>{{log.getExerciseName()}}</td>
+                <td>{{log.getNumOfSets()}}</td>
+                <td>{{log.getNumOfReps()}}</td>
+                <td>{{log.getWeight()}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button (click)="newWorkoutLog()">New Workout Log</button>
+</div>

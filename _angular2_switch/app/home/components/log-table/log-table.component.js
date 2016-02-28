@@ -1,4 +1,4 @@
-System.register(['angular2/core', './components/log-table/log-table.component'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../../models/workout-log'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,36 +10,37 @@ System.register(['angular2/core', './components/log-table/log-table.component'],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, log_table_component_1;
-    var HomeComponent;
+    var core_1, workout_log_1;
+    var LogTableComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (log_table_component_1_1) {
-                log_table_component_1 = log_table_component_1_1;
+            function (workout_log_1_1) {
+                workout_log_1 = workout_log_1_1;
             }],
         execute: function() {
-            HomeComponent = (function () {
-                function HomeComponent() {
-                    this.title = "Workout Logger";
-                    this.todays_date = new Date();
+            LogTableComponent = (function () {
+                function LogTableComponent() {
+                    this.workoutLogs = [
+                        new workout_log_1.WorkoutLog("workout", 3, 5, 60)
+                    ];
                 }
-                HomeComponent = __decorate([
+                LogTableComponent.prototype.newWorkoutLog = function () {
+                    this.workoutLogs.push(new workout_log_1.WorkoutLog("exercise name", 0, 0, 0));
+                };
+                LogTableComponent = __decorate([
                     core_1.Component({
-                        selector: 'home',
-                        templateUrl: 'app/home/home.html',
-                        directives: [
-                            log_table_component_1.LogTableComponent,
-                        ]
+                        selector: 'log-table',
+                        templateUrl: 'app/home/components/log-table/log-table.component.html'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], HomeComponent);
-                return HomeComponent;
+                ], LogTableComponent);
+                return LogTableComponent;
             }());
-            exports_1("HomeComponent", HomeComponent);
+            exports_1("LogTableComponent", LogTableComponent);
         }
     }
 });
-//# sourceMappingURL=home.js.map
+//# sourceMappingURL=log-table.component.js.map

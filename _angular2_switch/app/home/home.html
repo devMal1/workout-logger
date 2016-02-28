@@ -1,1 +1,7 @@
-<h1>{{title}}</h1>
+<div>
+    <h1>{{ title | uppercase }}</h1>
+    <button class="btn btn-default">Previous Logs</button>
+    <h3>{{todays_date | date}}</h3>
+
+    <log-table></log-table>
+</div>
