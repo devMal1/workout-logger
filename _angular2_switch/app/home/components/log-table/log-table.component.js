@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../../models/workout-log'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/common', '../../../models/workout-log'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['angular2/core', '../../../models/workout-log'], function(expor
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, workout_log_1;
+    var core_1, common_1, workout_log_1;
     var LogTableComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             },
             function (workout_log_1_1) {
                 workout_log_1 = workout_log_1_1;
@@ -23,17 +26,23 @@ System.register(['angular2/core', '../../../models/workout-log'], function(expor
         execute: function() {
             LogTableComponent = (function () {
                 function LogTableComponent() {
-                    this.workoutLogs = [
-                        new workout_log_1.WorkoutLog("workout", 3, 5, 60)
-                    ];
+                    this.workoutLogs = [];
+                    this.newWorkoutLog = new workout_log_1.WorkoutLog("ExerciseName", 0, 0, 0);
+                    this.addingLog = false;
                 }
-                LogTableComponent.prototype.newWorkoutLog = function () {
-                    this.workoutLogs.push(new workout_log_1.WorkoutLog("exercise name", 0, 0, 0));
+                LogTableComponent.prototype.addLog = function () {
+                    this.workoutLogs.push(this.newWorkoutLog);
+                    this.resetNewLog();
+                };
+                LogTableComponent.prototype.resetNewLog = function () {
+                    this.newWorkoutLog = new workout_log_1.WorkoutLog("ExerciseName", 0, 0, 0);
+                    this.addingLog = false;
                 };
                 LogTableComponent = __decorate([
                     core_1.Component({
                         selector: 'log-table',
-                        templateUrl: 'app/home/components/log-table/log-table.component.html'
+                        templateUrl: 'app/home/components/log-table/log-table.component.html',
+                        directives: [common_1.NgForm]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], LogTableComponent);

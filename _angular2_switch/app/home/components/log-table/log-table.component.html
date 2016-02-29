@@ -8,8 +8,8 @@
                 <td>Weight</td>
             </tr>
         </thead>
-        <tbody>
-            <tr *ngFor="#log of workoutLogs" *ngIf="workoutLogs">
+        <tbody *ngIf="workoutLogs">
+            <tr *ngFor="#log of workoutLogs">
                 <td>{{log.getExerciseName()}}</td>
                 <td>{{log.getNumOfSets()}}</td>
                 <td>{{log.getNumOfReps()}}</td>
@@ -17,6 +17,26 @@
             </tr>
         </tbody>
     </table>
+</div>
 
-    <button (click)="newWorkoutLog()">New Workout Log</button>
+<div>
+    <button (click)="addingLog = true">New Workout Log</button>
+    <form *ngIf="addingLog">
+        <input [(ngModel)]="newWorkoutLog.exerciseName"
+            required ngControl="name" #name="ngForm" />
+
+        <input [(ngModel)]="newWorkoutLog.numOfSets"
+            required ngControl="sets" #sets="ngForm" />
+
+        <input [(ngModel)]="newWorkoutLog.numOfReps"
+            required ngControl="reps" #reps="ngForm" />
+
+        <input [(ngModel)]="newWorkoutLog.weight"
+            required ngControl="weight" #weight="ngForm" />
+
+        <button (click)="addLog()" [disabled]="!name.valid || !sets.valid || !reps.valid || !weight.valid">
+            Add Log!
+        </button>
+        <button (click)="resetNewLog()">Cancel</button>
+    </form>
 </div>

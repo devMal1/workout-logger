@@ -1,9 +1,10 @@
 export class WorkoutLog {
+
     constructor(
-        private exerciseName: string,
-        private numOfSets: number,
-        private numOfReps: number,
-        private weight: number
+        public exerciseName?: string,
+        public numOfSets?: number,
+        public numOfReps?: number,
+        public weight?: number
     ) {}
 
     public getExerciseName(): string {
