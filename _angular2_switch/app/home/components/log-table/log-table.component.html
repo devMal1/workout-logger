@@ -20,7 +20,6 @@
 </div>
 
 <div>
-    <button (click)="addingLog = true">New Workout Log</button>
     <form *ngIf="addingLog">
         <input [(ngModel)]="newWorkoutLog.exerciseName"
             required ngControl="name" #name="ngForm" />
@@ -39,4 +38,5 @@
         </button>
         <button (click)="resetNewLog()">Cancel</button>
     </form>
+    <button (click)="addingLog = true;">New Workout Log</button>
 </div>
