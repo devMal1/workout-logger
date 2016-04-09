@@ -1,1 +1,37 @@
 <h1>{{title}}</h1>
+
+<div *ngIf="!errorMessage">
+    <div *ngIf="savedLogs" ngFor="#session of savedLogs">
+        <h4>{{session.getDate() | date}}</h4>
+        <table>
+            <thead>
+                <tr>
+                    <td>Exercise Name</td>
+                    <td># of Sets</td>
+                    <td># of Reps</td>
+                    <td>Weight</td>
+                </tr>
+            </thead>
+            <tbody *ngIf="session">
+                <tr *ngFor="#log of session">
+                    <td>{{log.getDate()}}</td>
+                    <td>{{log.getNumOfSets()}}</td>
+                    <td>{{log.getNumOfReps()}}</td>
+                    <td>{{log.getWeight()}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="!savedLogs">
+        <h3>No logs to show... better get in the gym!</h3>
+    </div>
+</div>
+
+<div *ngIf="errorMessage">
+    <h3>{{errorMessage}}</h3>
+</div>
+
+<div>
+    <button (click)="goToHome()">Workout Logger</button>
+</div>

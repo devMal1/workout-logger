@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../services/workout-logger.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,29 +10,47 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
-    var SavedLogs;
+    var core_1, router_1, workout_logger_service_1;
+    var SavedLogsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
+            function (workout_logger_service_1_1) {
+                workout_logger_service_1 = workout_logger_service_1_1;
             }],
         execute: function() {
-            SavedLogs = (function () {
-                function SavedLogs() {
+            SavedLogsComponent = (function () {
+                function SavedLogsComponent(_workoutLoggerService, _router) {
+                    this._workoutLoggerService = _workoutLoggerService;
+                    this._router = _router;
                     this.title = "Saved Logs";
                 }
-                SavedLogs = __decorate([
+                SavedLogsComponent.prototype.ngOnInit = function () { this.getLogs(); };
+                SavedLogsComponent.prototype.getLogs = function () {
+                    var _this = this;
+                    this._workoutLoggerService.getLogs()
+                        .subscribe(function (workoutLogs) { return _this.savedLogs = workoutLogs; }, function (error) { return _this.errorMessage = error; });
+                };
+                SavedLogsComponent.prototype.goToHome = function () {
+                    var link = ['Home'];
+                    this._router.navigate(link);
+                };
+                SavedLogsComponent = __decorate([
                     core_1.Component({
                         selector: 'saved-logs',
                         templateUrl: 'app/saved-logs/saved-logs.html',
                         directives: []
                     }), 
-                    __metadata('design:paramtypes', [])
-                ], SavedLogs);
-                return SavedLogs;
+                    __metadata('design:paramtypes', [workout_logger_service_1.WorkoutLoggerService, router_1.Router])
+                ], SavedLogsComponent);
+                return SavedLogsComponent;
             }());
-            exports_1("SavedLogs", SavedLogs);
+            exports_1("SavedLogsComponent", SavedLogsComponent);
         }
     }
 });
