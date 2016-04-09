@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './home/home', './saved-logs/saved-logs', './services/workout-logger.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', 'angular2/http', './home/home', './saved-logs/saved-logs', './services/workout-logger.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './home/home', './saved-log
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, home_1, saved_logs_1, workout_logger_service_1;
+    var core_1, router_1, http_1, home_1, saved_logs_1, workout_logger_service_1;
     var AppComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', 'angular2/router', './home/home', './saved-log
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (http_1_1) {
+                http_1 = http_1_1;
             },
             function (home_1_1) {
                 home_1 = home_1_1;
@@ -42,6 +45,7 @@ System.register(['angular2/core', 'angular2/router', './home/home', './saved-log
                         ],
                         providers: [
                             router_1.ROUTER_PROVIDERS,
+                            http_1.HTTP_PROVIDERS,
                             workout_logger_service_1.WorkoutLoggerService
                         ]
                     }),
