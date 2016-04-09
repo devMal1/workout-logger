@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', './components/log-table/log-table.component', './../services/workout-logger.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './components/log-table/log-table.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', './components/log-table/log
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, log_table_component_1, workout_logger_service_1;
+    var core_1, router_1, log_table_component_1;
     var HomeComponent;
     return {
         setters:[
@@ -22,9 +22,6 @@ System.register(['angular2/core', 'angular2/router', './components/log-table/log
             },
             function (log_table_component_1_1) {
                 log_table_component_1 = log_table_component_1_1;
-            },
-            function (workout_logger_service_1_1) {
-                workout_logger_service_1 = workout_logger_service_1_1;
             }],
         execute: function() {
             HomeComponent = (function () {
@@ -39,9 +36,6 @@ System.register(['angular2/core', 'angular2/router', './components/log-table/log
                         directives: [
                             log_table_component_1.LogTableComponent,
                             router_1.ROUTER_DIRECTIVES
-                        ],
-                        providers: [
-                            workout_logger_service_1.WorkoutLoggerService
                         ],
                     }), 
                     __metadata('design:paramtypes', [])

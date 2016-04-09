@@ -1,4 +1,4 @@
-System.register(['angular2/core', './home/home'], function(exports_1, context_1) {
+System.register(['angular2/core', './home/home', './services/workout-logger.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', './home/home'], function(exports_1, context_1)
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, home_1;
+    var core_1, home_1, workout_logger_service_1;
     var AppComponent;
     return {
         setters:[
@@ -19,6 +19,9 @@ System.register(['angular2/core', './home/home'], function(exports_1, context_1)
             },
             function (home_1_1) {
                 home_1 = home_1_1;
+            },
+            function (workout_logger_service_1_1) {
+                workout_logger_service_1 = workout_logger_service_1_1;
             }],
         execute: function() {
             AppComponent = (function () {
@@ -30,6 +33,9 @@ System.register(['angular2/core', './home/home'], function(exports_1, context_1)
                         template: "\n        <home></home>\n\n    ",
                         directives: [
                             home_1.HomeComponent,
+                        ],
+                        providers: [
+                            workout_logger_service_1.WorkoutLoggerService
                         ]
                     }), 
                     __metadata('design:paramtypes', [])

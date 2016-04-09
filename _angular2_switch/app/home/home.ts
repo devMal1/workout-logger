@@ -1,7 +1,6 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {LogTableComponent} from './components/log-table/log-table.component';
-import {WorkoutLoggerService} from './../services/workout-logger.service';
 
 @Component({
     selector: 'home',
@@ -9,9 +8,6 @@ import {WorkoutLoggerService} from './../services/workout-logger.service';
     directives: [
         LogTableComponent,
         ROUTER_DIRECTIVES
-    ],
-    providers: [
-        WorkoutLoggerService
     ],
 })
 export class HomeComponent {
