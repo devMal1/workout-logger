@@ -1,5 +1,4 @@
 import {Component} from 'angular2/core';
-import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {LogTableComponent} from './components/log-table/log-table.component';
 
 @Component({
@@ -7,7 +6,6 @@ import {LogTableComponent} from './components/log-table/log-table.component';
     templateUrl: 'app/home/home.html',
     directives: [
         LogTableComponent,
-        ROUTER_DIRECTIVES
     ],
 })
 export class HomeComponent {
