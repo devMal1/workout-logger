@@ -1,4 +1,4 @@
-System.register(['angular2/core', './components/log-table/log-table.component'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './components/log-table/log-table.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,22 +10,30 @@ System.register(['angular2/core', './components/log-table/log-table.component'],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, log_table_component_1;
+    var core_1, router_1, log_table_component_1;
     var HomeComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (log_table_component_1_1) {
                 log_table_component_1 = log_table_component_1_1;
             }],
         execute: function() {
             HomeComponent = (function () {
-                function HomeComponent() {
+                function HomeComponent(_router) {
+                    this._router = _router;
                     this.title = "Workout Logger";
                     this.todays_date = new Date();
                 }
+                HomeComponent.prototype.goToSavedLogs = function () {
+                    var link = ['SavedLogs'];
+                    this._router.navigate(link);
+                };
                 HomeComponent = __decorate([
                     core_1.Component({
                         selector: 'home',
@@ -34,7 +42,7 @@ System.register(['angular2/core', './components/log-table/log-table.component'],
                             log_table_component_1.LogTableComponent,
                         ],
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [router_1.Router])
                 ], HomeComponent);
                 return HomeComponent;
             }());
