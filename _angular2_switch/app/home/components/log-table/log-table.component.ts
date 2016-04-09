@@ -13,12 +13,12 @@ export class LogTableComponent {
     public newWorkoutLog: WorkoutLog = new WorkoutLog("ExerciseName", 0, 0, 0);
     public addingLog: boolean = false;
 
-    public addLog() {
+    public addLog(): void {
         this.workoutLogs.push(this.newWorkoutLog);
         this.resetNewLog();
     }
 
-    public resetNewLog() {
+    public resetNewLog(): void {
         this.newWorkoutLog = new WorkoutLog("ExerciseName", 0, 0, 0);
         this.addingLog = false;
     }
