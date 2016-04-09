@@ -1,4 +1,4 @@
-System.register(['angular2/core', './home/home', './services/workout-logger.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', './home/home', './saved-logs/saved-logs', './services/workout-logger.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,21 @@ System.register(['angular2/core', './home/home', './services/workout-logger.serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, home_1, workout_logger_service_1;
+    var core_1, router_1, home_1, saved_logs_1, workout_logger_service_1;
     var AppComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            },
             function (home_1_1) {
                 home_1 = home_1_1;
+            },
+            function (saved_logs_1_1) {
+                saved_logs_1 = saved_logs_1_1;
             },
             function (workout_logger_service_1_1) {
                 workout_logger_service_1 = workout_logger_service_1_1;
@@ -30,14 +36,28 @@ System.register(['angular2/core', './home/home', './services/workout-logger.serv
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "\n        <home></home>\n\n    ",
+                        template: "\n        <nav></nav>\n        <router-outlet></router-outlet>\n    ",
                         directives: [
-                            home_1.HomeComponent,
+                            router_1.ROUTER_DIRECTIVES,
                         ],
                         providers: [
+                            router_1.ROUTER_PROVIDERS,
                             workout_logger_service_1.WorkoutLoggerService
                         ]
-                    }), 
+                    }),
+                    router_1.RouteConfig([
+                        {
+                            path: '/logger',
+                            name: 'WorkoutLogger',
+                            component: home_1.HomeComponent,
+                            useAsDefault: true
+                        },
+                        {
+                            path: '/prevSessions',
+                            name: 'SavedLogs',
+                            component: saved_logs_1.SavedLogsComponent
+                        }
+                    ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
                 return AppComponent;
