@@ -22,7 +22,7 @@ import {WorkoutLoggerService} from './services/workout-logger.service';
 @RouteConfig([
     {
         path: '/logger',
-        name: 'WorkoutLogger',
+        name: 'Home',
         component: HomeComponent,
         useAsDefault: true
     },

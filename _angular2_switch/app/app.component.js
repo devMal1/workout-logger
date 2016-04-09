@@ -48,7 +48,7 @@ System.register(['angular2/core', 'angular2/router', './home/home', './saved-log
                     router_1.RouteConfig([
                         {
                             path: '/logger',
-                            name: 'WorkoutLogger',
+                            name: 'Home',
                             component: home_1.HomeComponent,
                             useAsDefault: true
                         },
